@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "outputDirectory": "dist/client",
+  "cleanUrls": true,
+  "trailingSlash": false
+}
