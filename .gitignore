@@ -40,3 +40,5 @@ next-env.d.ts
 .claude/
 stitch_new_project_setup/
 tsconfig.tsbuildinfo
+
+.vercel

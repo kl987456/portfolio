@@ -128,9 +128,19 @@ export function createPortfolioAudio(onAutoStop?: () => void): PortfolioAudio {
     if (cached !== undefined) return cached;
     let ok = false;
     try {
-      ok = (await fetch(src, { method: 'HEAD' })).ok;
+      const res = await fetch(src, { method: 'HEAD' });
+      ok = res.ok || res.status === 304;
+      if (!ok && res.status === 405) {
+        const getRes = await fetch(src, { method: 'GET', headers: { Range: 'bytes=0-0' } });
+        ok = getRes.ok || getRes.status === 206 || getRes.status === 304;
+      }
     } catch {
-      ok = false;
+      try {
+        const getRes = await fetch(src, { method: 'GET', headers: { Range: 'bytes=0-0' } });
+        ok = getRes.ok || getRes.status === 206 || getRes.status === 304;
+      } catch {
+        ok = false;
+      }
     }
     reachable.set(src, ok);
     return ok;

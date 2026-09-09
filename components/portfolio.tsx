@@ -786,7 +786,7 @@ export default function Portfolio({
     if (initialView === 'skills') return 5;
     if (initialView === 'playground') return 6;
     if (initialView === 'contact') return 7;
-    return 0; // Default HOME
+    return 1; // Start on 2nd page (Screen 02 / VISION) for home view and auto-scroll to 1st page
   };
 
   const [activeScreen, setActiveScreen] = useState<number>(getInitialScreen);
@@ -831,6 +831,7 @@ export default function Portfolio({
   const deck = useRef<HTMLDivElement>(null);
   const dragStart = useRef<{ x: number; y: number } | null>(null);
   const dragged = useRef<boolean>(false);
+  const hasAutoScrolled = useRef<boolean>(false);
 
   const currentProject = projects[activeProjectIdx];
   const activeSlug = currentProject.slug;
@@ -941,6 +942,35 @@ export default function Portfolio({
     [activeScreen, isTransitioning, sound],
   );
 
+  // Auto-scroll: When landing on Home view (starts on Screen 02 / VISION), automatically scroll to Screen 01 / HOME
+  useEffect(() => {
+    if (initialView !== 'home' || hasAutoScrolled.current) return;
+    if (intro || overlay || lightbox !== null || deepDiveProject) return;
+
+    const timer = setTimeout(() => {
+      if (!hasAutoScrolled.current && activeScreen === 1) {
+        hasAutoScrolled.current = true;
+        goToScreen(0);
+      }
+    }, 2200);
+
+    const cancelAutoScroll = () => {
+      hasAutoScrolled.current = true;
+      clearTimeout(timer);
+    };
+
+    window.addEventListener('wheel', cancelAutoScroll, { passive: true });
+    window.addEventListener('touchstart', cancelAutoScroll, { passive: true });
+    window.addEventListener('keydown', cancelAutoScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('wheel', cancelAutoScroll);
+      window.removeEventListener('touchstart', cancelAutoScroll);
+      window.removeEventListener('keydown', cancelAutoScroll);
+    };
+  }, [initialView, intro, overlay, lightbox, deepDiveProject, activeScreen, goToScreen]);
+
   // 5 Distinct Spatial Transition Languages per Screen Pair
   const getScreenTransitionClass = useCallback(
     (screenIdx: number): string => {
@@ -1011,17 +1041,8 @@ export default function Portfolio({
     [activeScreen, prevScreen, isTransitioning, direction],
   );
 
-  // Sound Engine Setup & Intro Dismissal
-  const handleEnter = useCallback(() => {
-    setIntroExiting(true);
-    setTimeout(() => {
-      setIntro(false);
-      setIntroExiting(false);
-
-    }, 550);
-  }, []);
-
-  const toggleSound = async (enabled: boolean) => {
+  // Sound Engine Controller
+  const toggleSound = useCallback(async (enabled: boolean) => {
     if (!player.current)
       player.current = createPortfolioAudio(() => setSound(false));
     if (!enabled) {
@@ -1031,7 +1052,17 @@ export default function Portfolio({
     }
     const source = await player.current.enable('work');
     setSound(source !== 'off');
-  };
+  }, []);
+
+  // Intro Dismissal & Portfolio Opening with Audio Wired
+  const handleEnter = useCallback(() => {
+    setIntroExiting(true);
+    toggleSound(true).catch(() => {});
+    setTimeout(() => {
+      setIntro(false);
+      setIntroExiting(false);
+    }, 550);
+  }, [toggleSound]);
 
   const copyEmail = async () => {
     try {
