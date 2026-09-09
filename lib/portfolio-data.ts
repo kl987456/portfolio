@@ -1,7 +1,7 @@
 export const profile = {
   name: 'Kamalakar Reddy Gorantla', shortName: 'Kamalakar Reddy Gorantla',
   email: 'gorantlakamalakarreddharhi@gmail.com',
-  github: 'https://github.com/kl987456', linkedin: 'https://linkedin.com/in/kamalakar-reddy',
+  github: 'https://github.com/kl987456', linkedin: 'https://www.linkedin.com/in/kamalakar-reddy-gorantla-6a3099290/',
   resume: '/Gorantla_Kamalakar_Reddy_Resume.pdf',
 };
 export const projects = [

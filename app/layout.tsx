@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Instrument_Serif, Plus_Jakarta_Sans, Geist_Mono } from 'next/font/google';
 import { ogImage, siteDescription, siteName, siteUrl } from '@/lib/site';
 import './globals.css';
@@ -57,6 +57,13 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [ogImage.url],
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#04060d',
 };
 
 export default function RootLayout({

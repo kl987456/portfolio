@@ -1380,20 +1380,23 @@ export default function Portfolio({
           <span className="live-dot" /> AI Systems Engineer
         </div>
 
-        <div className="audio-control">
-          <button
-            onClick={() => toggleSound(!sound)}
-            aria-label={sound ? 'Mute audio' : 'Enable audio'}
-          >
-            SOUND: {sound ? 'ON' : 'OFF'}
-          </button>
-          <span className={`sound-bars ${sound ? 'sound-on' : ''}`}>
+        <button
+          type="button"
+          className={`audio-control audio-toggle-button ${sound ? 'sound-active' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleSound(!sound);
+          }}
+          aria-label={sound ? 'Mute audio' : 'Enable audio'}
+        >
+          <span>SOUND: {sound ? 'ON' : 'OFF'}</span>
+          <span className={`sound-bars ${sound ? 'sound-on' : ''}`} aria-hidden="true">
             <i />
             <i />
             <i />
             <i />
           </span>
-        </div>
+        </button>
 
         {/* KR Badge + Theme Toggle - centered in header */}
         <div className="header-kr-group">

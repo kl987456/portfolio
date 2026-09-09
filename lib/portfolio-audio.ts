@@ -96,8 +96,20 @@ export function createPortfolioAudio(onAutoStop?: () => void): PortfolioAudio {
     if (ctx && master) master.gain.setTargetAtTime(0, ctx.currentTime, 0.2);
   };
 
-  const silence = () => {
-    if (current && !current.paused) fadeTo(current, 0, FADE_OUT_MS, true);
+  const silence = (immediate = false) => {
+    fades.forEach(clearInterval);
+    fades.clear();
+    if (immediate) {
+      elements.forEach((el) => {
+        try {
+          el.pause();
+          el.currentTime = 0;
+          el.volume = 0;
+        } catch {}
+      });
+    } else if (current && !current.paused) {
+      fadeTo(current, 0, FADE_OUT_MS, true);
+    }
     current = null;
     currentSrc = '';
     stopGenerated();
@@ -296,7 +308,7 @@ export function createPortfolioAudio(onAutoStop?: () => void): PortfolioAudio {
       operation++;
       enabled = false;
       clearLimit();
-      silence();
+      silence(true);
     },
 
     setScene(target) {
