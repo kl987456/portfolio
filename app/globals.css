@@ -4465,3 +4465,56 @@ html.theme-white .methodology-footer-banner {
     justify-content: space-between;
   }
 }
+
+/* Mobile navigation and screen-two portrait framing. The source artwork is wide,
+   so a centered crop hides the face on portrait phones. */
+@media (max-width: 768px) {
+  .menu-toggle {
+    gap: 8px !important;
+    min-width: 82px;
+    justify-content: center !important;
+  }
+
+  .menu-toggle > .menu-toggle-icon {
+    display: grid !important;
+    width: 16px;
+    gap: 4px;
+  }
+
+  .menu-toggle-icon i {
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: currentColor;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle-icon i:first-child {
+    transform: translateY(2.75px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle-icon i:last-child {
+    transform: translateY(-2.75px) rotate(-45deg);
+  }
+
+  .portfolio-dialog.overlay-menu {
+    min-height: 100svh !important;
+    max-height: 100svh !important;
+    padding: 76px 22px 28px !important;
+  }
+
+  .overlay-nav {
+    display: grid;
+    gap: 4px !important;
+    overflow-y: auto;
+  }
+
+  .overlay-nav button {
+    min-height: 48px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .vision-fullbleed-img {
+    object-position: 74% 18% !important;
+  }
+}

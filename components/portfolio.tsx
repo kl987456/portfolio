@@ -1369,10 +1369,14 @@ export default function Portfolio({
       {/* Persistent Site Header */}
       <header className="site-header">
         <button
+          type="button"
           className="menu-toggle"
-          onClick={() => setOverlay('menu')}
-          aria-label="Open navigation menu"
+          onClick={() => setOverlay((current) => (current === 'menu' ? null : 'menu'))}
+          aria-label={overlay === 'menu' ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-controls="site-navigation"
+          aria-expanded={overlay === 'menu'}
         >
+          <span className="menu-toggle-icon" aria-hidden="true"><i /><i /></span>
           <em>MENU</em>
         </button>
 
@@ -2358,7 +2362,7 @@ export default function Portfolio({
                 AI Systems Engineer · Bengaluru<br />
                 Multi-agent systems, RAG & production engineering
               </DialogDescription>
-              <nav className="overlay-nav" aria-label="Expanded navigation">
+              <nav id="site-navigation" className="overlay-nav" aria-label="Expanded navigation">
                 {navigation}
               </nav>
               <div className="menu-scene">
