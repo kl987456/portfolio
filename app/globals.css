@@ -4497,24 +4497,52 @@ html.theme-white .methodology-footer-banner {
   }
 
   .portfolio-dialog.overlay-menu {
+    display: flex !important;
+    flex-direction: column;
     min-height: 100svh !important;
     max-height: 100svh !important;
     padding: 76px 22px 28px !important;
+  }
+
+  .menu-title {
+    display: block !important;
+    margin: 0 0 10px;
+    font: 600 11px var(--font-mono), monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .menu-caption {
+    margin: 0 0 22px;
+    line-height: 1.45;
   }
 
   .overlay-nav {
     display: grid;
     gap: 4px !important;
     overflow-y: auto;
+    flex: 1;
+    align-content: start;
   }
 
   .overlay-nav button {
-    min-height: 48px;
+    min-height: 56px;
     width: 100%;
     text-align: left;
+    padding: 8px 0;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+    font-size: clamp(30px, 9vw, 42px) !important;
+  }
+
+  .menu-bottom {
+    position: static !important;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
   }
 
   .vision-fullbleed-img {
-    object-position: 74% 18% !important;
+    object-position: 88% 16% !important;
   }
 }

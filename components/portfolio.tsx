@@ -2357,7 +2357,7 @@ export default function Portfolio({
 
           {overlay === 'menu' && (
             <>
-              <DialogTitle className="sr-only">Navigation</DialogTitle>
+              <DialogTitle className="menu-title">Navigation</DialogTitle>
               <DialogDescription className="menu-caption">
                 AI Systems Engineer · Bengaluru<br />
                 Multi-agent systems, RAG & production engineering
