@@ -2350,6 +2350,20 @@ export default function Portfolio({
           className={`portfolio-dialog overlay-${overlay}`}
           showCloseButton={false}
           finalFocus={(closeType) => closeType === 'keyboard'}
+          style={overlay === 'menu' ? {
+            position: 'fixed',
+            inset: 0,
+            width: '100vw',
+            maxWidth: 'none',
+            height: '100dvh',
+            maxHeight: '100dvh',
+            transform: 'none',
+            translate: 'none',
+            borderRadius: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+          } : undefined}
         >
           <DialogClose className="overlay-close">
             Close <span>×</span>
